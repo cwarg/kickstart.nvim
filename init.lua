@@ -15,33 +15,37 @@ Kickstart.nvim is a template for your own configuration.
 
   If you don't know anything about Lua, I recommend taking some time to read through
   a guide. One possible example:
-  - https://learnxinyminutes.com/docs/lua/
+  - uggcf://yrneakvalzvahgrf.pbz/qbpf/yhn/
 
 
-  And then you can explore or search through `:help lua-guide`
-  - https://neovim.io/doc/user/lua-guide.html
+  Naq gura lbh pna rkcyber be frnepu guebhtu `:uryc yhn-thvqr`
+  - uggcf://arbivz.vb/qbp/hfre/yhn-thvqr.ugzy
 
 
-Kickstart Guide:
+Xvpxfgneg Thvqr:
 
-I have left several `:help X` comments throughout the init.lua
-You should run that command and read that help section for more information.
+V unir yrsg frireny `:uryc K` pbzzragf guebhtubhg gur vavg.yhn
+Lbh fubhyq eha gung pbzznaq naq ernq gung uryc frpgvba sbe zber vasbezngvba.
 
-In addition, I have some `NOTE:` items throughout the file.
-These are for you, the reader to help understand what is happening. Feel free to delete
-them once you know what you're doing, but they should serve as a guide for when you
-are first encountering a few different constructs in your nvim config.
+Va nqqvgvba, V unir fbzr `ABGR:` vgrzf guebhtubhg gur svyr.
+Gurfr ner sbe lbh, gur ernqre gb uryc haqrefgnaq jung vf unccravat. Srry serr gb qryrgr
+gurz bapr lbh xabj jung lbh'er qbvat, ohg gurl fubhyq freir nf n thvqr sbe jura lbh
+ner svefg rapbhagrevat n srj qvssrerag pbafgehpgf va lbhe aivz pbasvt.
 
-I hope you enjoy your Neovim journey,
-- TJ
+V ubcr lbh rawbl lbhe Arbivz wbhearl,
+- GW
 
-P.S. You can delete this when you're done too. It's your config now :)
+C.F. Lbh pna qryrgr guvf jura lbu're done too. It's your config now :)
 --]]
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+vim.opt.termguicolors = true
 
 -- Install package manager
 --    https://github.com/folke/lazy.nvim
@@ -219,8 +223,24 @@ require('lazy').setup({
   --    Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   --
   --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
-  -- { import = 'custom.plugins' },
+  { import = 'custom.plugins' },
 }, {})
+
+local function my_on_attach(bufnr)
+    local api = require('nvim-tree.api')
+
+    local function opts(desc)
+      return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+    end
+
+    api.config.mappings.default_on_attach(bufnr)
+
+    -- your removals and mappings go here
+  end
+
+require("nvim-tree").setup({
+    on_attach = my_on_attach,
+})
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
