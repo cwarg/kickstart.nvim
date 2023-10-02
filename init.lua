@@ -4,6 +4,7 @@
 ==================== READ THIS BEFORE CONTINUING ====================
 =====================================================================
 
+vim.keymap.set('n', '<leader>E', api.tree.toggle_help, opts('Help'))
 Kickstart.nvim is *not* a distribution.
 
 Kickstart.nvim is a template for your own configuration.
@@ -225,22 +226,6 @@ require('lazy').setup({
   --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
   { import = 'custom.plugins' },
 }, {})
-
-local function my_on_attach(bufnr)
-    local api = require('nvim-tree.api')
-
-    local function opts(desc)
-      return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
-    end
-
-    api.config.mappings.default_on_attach(bufnr)
-
-    -- your removals and mappings go here
-  end
-
-require("nvim-tree").setup({
-    on_attach = my_on_attach,
-})
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
@@ -563,6 +548,8 @@ cmp.setup {
     { name = 'luasnip' },
   },
 }
+
+require('lua/custom/mappings')
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
